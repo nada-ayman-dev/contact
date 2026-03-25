@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '/screens/home/home_screen.dart';
-import '';
+import '/constants/app_colors.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -60,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen>
               style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xFFFFF1D4), // Gold
+                color:  AppColors.gold, // Gold
                 letterSpacing: 2,
               ),
             ),
