@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '/constants/app_colors.dart';
 import '/constants/app_images.dart';
-
+import '/screens/home/add_acount.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -85,7 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.gold,
         onPressed: () {
-          print("Add Contact Clicked");
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddContactScreen(),
+            ),
+          );
         },
         child: const Icon(
           Icons.add,
@@ -93,7 +98,6 @@ class _HomeScreenState extends State<HomeScreen> {
           size: 30,
         ),
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
