@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '/constants/app_colors.dart';
 import '/constants/app_images.dart';
-import '/add_accounts/accounts_card.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,7 +12,6 @@ class AddContactScreen extends StatefulWidget {
 }
 
 class _AddContactScreenState extends State<AddContactScreen> {
-
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
@@ -49,22 +47,19 @@ class _AddContactScreenState extends State<AddContactScreen> {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-
               /// 🔹 الكارد الكبير
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: AppColors.gold.withOpacity(0.15),
+                  color: AppColors.gold.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   children: [
-
                     /// صورة + بيانات
                     Row(
                       children: [
-
                         /// 🔥 صورة قابلة للضغط
                         GestureDetector(
                           onTap: pickImage,
@@ -77,15 +72,16 @@ class _AddContactScreenState extends State<AddContactScreen> {
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(16),
-                              child: selectedImage != null
-                                  ? Image.file(
-                                selectedImage!,
-                                fit: BoxFit.cover,
-                              )
-                                  : Image.asset(
-                                AppImages.background,
-                                fit: BoxFit.cover,
-                              ),
+                              child:
+                                  selectedImage != null
+                                      ? Image.file(
+                                        selectedImage!,
+                                        fit: BoxFit.cover,
+                                      )
+                                      : Image.asset(
+                                        AppImages.background,
+                                        fit: BoxFit.cover,
+                                      ),
                             ),
                           ),
                         ),
@@ -162,10 +158,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
                   },
                   child: const Text(
                     "Enter user",
-                    style: TextStyle(
-                      color: AppColors.darkBlue,
-                      fontSize: 18,
-                    ),
+                    style: TextStyle(color: AppColors.darkBlue, fontSize: 18),
                   ),
                 ),
               ),

@@ -1,8 +1,8 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import '/constants/app_colors.dart';
-import '/screens/home/add_acount.dart';
 import '/constants/app_images.dart';
+import '/screens/home/add_acount.dart';
+
 class AccountsScreen extends StatefulWidget {
   const AccountsScreen({super.key});
 
@@ -97,12 +97,12 @@ class _AccountsScreenState extends State<AccountsScreen> {
               width: 177,
               height: 286,
               decoration: BoxDecoration(
-                color:  AppColors.gold, // الخلفية الكريمية للكارد
+                color: AppColors.gold, // الخلفية الكريمية للكارد
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(color: AppColors.borderColor, width: 1),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.borderColor.withOpacity(0.2),
+                    color: AppColors.borderColor.withValues(alpha: 0.2),
                     blurRadius: 4,
                     offset: const Offset(2, 2),
                   ),
@@ -149,7 +149,9 @@ class _AccountsScreenState extends State<AccountsScreen> {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.deleteIcon.withOpacity(0.8),
+                              color: AppColors.deleteIcon.withValues(
+                                alpha: 0.8,
+                              ),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(

@@ -2,8 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '/screens/home/home_screen.dart';
 import '/constants/app_colors.dart';
-import '/screens/home/add_acount.dart';
-import '/add_accounts/accounts_card.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -13,7 +12,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
-
   late AnimationController controller;
   late Animation<double> animation;
 
@@ -26,18 +24,15 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(seconds: 2),
     );
 
-    animation = CurvedAnimation(
-      parent: controller,
-      curve: Curves.easeInOut,
-    );
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
 
     controller.forward();
 
-    // بعد 3 ثواني يروح للهوم
+    // Navigate to HomeScreen after 3 seconds
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const AccountsScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     });
   }
@@ -51,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:AppColors.darkBlue , // Dark Blue
+      backgroundColor: AppColors.darkBlue,
       body: Center(
         child: ScaleTransition(
           scale: animation,
@@ -62,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
               style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.bold,
-                color:  AppColors.gold, // Gold
+                color: AppColors.gold,
                 letterSpacing: 2,
               ),
             ),
