@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import '/constants/app_colors.dart';
 import '/screens/home/add_acount.dart';
-
+import '/constants/app_images.dart';
 class AccountsScreen extends StatefulWidget {
   const AccountsScreen({super.key});
 
@@ -17,15 +17,33 @@ class _AccountsScreenState extends State<AccountsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.darkBlue,
-      body: users.isEmpty ? buildEmptyState() : buildGrid(),
+      body: Stack(
+        children: [
+          // Main content
+          users.isEmpty ? buildEmptyState() : buildGrid(),
+
+          // "Accounts" text at top left
+          Positioned(
+            top: 24,
+            left: 26,
+            child: const Text(
+              "Accounts",
+              style: TextStyle(
+                color: AppColors.gold, // Kramee color
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Arial', // Or any preferred font
+              ),
+            ),
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.gold,
         onPressed: () async {
           final result = await Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => const AddContactScreen(),
-            ),
+            MaterialPageRoute(builder: (context) => const AddContactScreen()),
           );
 
           if (result != null) {
@@ -49,8 +67,8 @@ class _AccountsScreenState extends State<AccountsScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset("assets/images/adding.gif", width: 200),
-          const SizedBox(height: 20),
+          Image.asset(AppImages.adding, width: 200),
+          const SizedBox(height: 10),
           const Text(
             "There is No Contacts Added Here",
             style: TextStyle(color: AppColors.gold, fontSize: 18),
@@ -62,107 +80,170 @@ class _AccountsScreenState extends State<AccountsScreen> {
 
   Widget buildGrid() {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 90, 16, 16),
       child: GridView.builder(
         itemCount: users.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
-          childAspectRatio: 0.65,
+          childAspectRatio: 177 / 286,
         ),
         itemBuilder: (context, index) {
           final user = users[index];
 
-          return Container(
-            width: 177,
-            height: 286,
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFF1D4), // الخلفية الكريمية للكارد
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.black, width: 1),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 4,
-                  offset: const Offset(2, 2),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                // الصورة + الاسم
-                Container(
-                  width: 177,
-                  height: 177,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+          return Center(
+            child: Container(
+              width: 177,
+              height: 286,
+              decoration: BoxDecoration(
+                color:  AppColors.gold, // الخلفية الكريمية للكارد
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppColors.borderColor, width: 1),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.borderColor.withOpacity(0.2),
+                    blurRadius: 4,
+                    offset: const Offset(2, 2),
                   ),
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
-                        child: user["image"] != null
-                            ? Image.file(user["image"], width: 177, height: 177, fit: BoxFit.cover)
-                            : Image.asset("assets/images/background_image.gif", width: 177, height: 177, fit: BoxFit.cover),
+                ],
+              ),
+              child: Column(
+                children: [
+                  // الصورة + الاسم
+                  Container(
+                    width: 177,
+                    height: 177,
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(16),
                       ),
-                      Positioned(
-                        bottom: 8,
-                        left: 8,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.8),
-                            borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(16),
                           ),
-                          child: Text(
-                            user["name"],
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          child:
+                              user["image"] != null
+                                  ? Image.file(
+                                    user["image"],
+                                    width: 177,
+                                    height: 177,
+                                    fit: BoxFit.cover,
+                                  )
+                                  : Image.asset(
+                                    AppImages.background,
+                                    width: 177,
+                                    height: 177,
+                                    fit: BoxFit.cover,
+                                  ),
+                        ),
+                        Positioned(
+                          bottom: 8,
+                          left: 8,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppColors.deleteIcon.withOpacity(0.8),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Text(
+                              user["name"],
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
-                // البيانات تحت الصورة
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Icon(Icons.email, size: 16),
-                          const SizedBox(width: 5),
-                          Expanded(child: Text(user["email"], overflow: TextOverflow.ellipsis)),
-                        ],
-                      ),
-                      const SizedBox(height: 5),
-                      Row(
-                        children: [
-                          const Icon(Icons.phone, size: 16),
-                          const SizedBox(width: 5),
-                          Text(user["phone"]),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                          onPressed: () {
-                            setState(() {
-                              users.removeAt(index);
-                            });
-                          },
-                          child: const Text("Delete"),
+                  // البيانات تحت الصورة
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.email,
+                              size: 14,
+                              color: AppColors.darkBlue,
+                            ),
+                            const SizedBox(width: 4),
+                            Expanded(
+                              child: Text(
+                                user["email"],
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 11),
+                                maxLines: 1,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 6),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.phone,
+                              size: 14,
+                              color: AppColors.darkBlue,
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              user["phone"],
+                              style: const TextStyle(fontSize: 11),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                        Center(
+                          child: SizedBox(
+                            width: 140,
+                            child: ElevatedButton.icon(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.deleteBg,
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 6,
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  users.removeAt(index);
+                                });
+                              },
+                              icon: const Icon(
+                                Icons.delete,
+                                size: 16,
+                                color: AppColors.deleteIcon,
+                              ),
+                              label: const Text(
+                                "Delete",
+                                style: TextStyle(
+                                  color: AppColors.deleteIcon,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
